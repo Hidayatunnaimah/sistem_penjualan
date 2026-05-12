@@ -43,10 +43,7 @@ public class Customer extends javax.swing.JFrame {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
- 
-    // =============================================
-    // CREATE
-    // =============================================
+    
     private void createData() {
         String nama   = jTextField2.getText().trim();
         String alamat = jTextField1.getText().trim();
@@ -69,10 +66,8 @@ public class Customer extends javax.swing.JFrame {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
- 
-    // =============================================
-    // UPDATE
-    // =============================================
+
+    
     private void editData() {
         int baris = jTable3.getSelectedRow();
         if (baris < 0) {
@@ -105,10 +100,7 @@ public class Customer extends javax.swing.JFrame {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
- 
-    // =============================================
-    // DELETE
-    // =============================================
+
     private void hapusData() {
         int baris = jTable3.getSelectedRow();
         if (baris < 0) {
