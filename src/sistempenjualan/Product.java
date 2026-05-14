@@ -14,52 +14,56 @@ import javax.swing.JOptionPane;
  * @author LULU
  */
 public class Product extends javax.swing.JFrame {
-ResultSet rs;
+
+    ResultSet rs;
+    private Bootstrap app;
+
     /**
      * Creates new form Product
+     * @param app
      */
-    public Product() {
+    public Product(Bootstrap app) {
+        this.app = app;
         initComponents();
         Koneksi.koneksi();
         tampilData();
     }
-     private void tampilData() {
+
+    private void tampilData() {
         try {
             String sql = "SELECT * FROM m_product";
             rs = Koneksi.stm.executeQuery(sql);
- 
+
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
- 
+
             while (rs.next()) {
                 model.addRow(new Object[]{
                     rs.getInt("id"),
                     rs.getString("product_name"),
                     rs.getString("harga"),
-                    rs.getString("id_vendor"),     
-                });
+                    rs.getString("id_vendor"),});
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Gagal memuat data: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-   
+
     private void createData() {
-        String nama   = jTextField1.getText().trim();
-        String harga  = jTextField3.getText().trim(); 
-        String id_vendor  = jTextField4.getText().trim();
-        
- 
+        String nama = jTextField1.getText().trim();
+        String harga = jTextField3.getText().trim();
+        String id_vendor = jTextField4.getText().trim();
+
         if (nama.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nama product, harga, id vendor tidak boleh kosong!",
                     "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
- 
+
         try {
             String sql = "INSERT INTO m_product (product_name, harga, id_vendor) VALUES ('"
-                    + nama  + "', '" + harga  + "', '" + id_vendor  + "' )";
+                    + nama + "', '" + harga + "', '" + id_vendor + "' )";
             Koneksi.stm.executeUpdate(sql);
             JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
             clearForm();
@@ -72,6 +76,7 @@ ResultSet rs;
 //      =============================================
     // UPDATE
     // =============================================
+
     private void editData() {
         int baris = jTable1.getSelectedRow();
         if (baris < 0) {
@@ -79,19 +84,19 @@ ResultSet rs;
                     "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
- 
-        String nama   = jTextField1.getText().trim();
-        String harga  = jTextField3.getText().trim(); 
-        String id_vendor  = jTextField4.getText().trim();
- 
+
+        String nama = jTextField1.getText().trim();
+        String harga = jTextField3.getText().trim();
+        String id_vendor = jTextField4.getText().trim();
+
         if (nama.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nama product tidak boleh kosong!",
                     "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
- 
+
         int id = (int) jTable1.getValueAt(baris, 0);
- 
+
         try {
             String sql = "UPDATE m_product SET product_name='" + nama
                     + "', harga='" + harga
@@ -106,7 +111,7 @@ ResultSet rs;
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
- 
+
     // =============================================
     // DELETE
     // =============================================
@@ -117,16 +122,16 @@ ResultSet rs;
                     "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
- 
-        int    id   = (int)    jTable1.getValueAt(baris, 0);
+
+        int id = (int) jTable1.getValueAt(baris, 0);
         String nama = (String) jTable1.getValueAt(baris, 1);
         String harga = (String) jTable1.getValueAt(baris, 2);
         String id_vendor = (String) jTable1.getValueAt(baris, 3);
- 
+
         int konfirmasi = JOptionPane.showConfirmDialog(this,
                 "Yakin ingin menghapus data \"" + nama + "\"?",
                 "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
- 
+
         if (konfirmasi == JOptionPane.YES_OPTION) {
             try {
                 String sql = "DELETE FROM m_product WHERE id=" + id;
@@ -140,23 +145,24 @@ ResultSet rs;
             }
         }
     }
-    
+
     private void clearForm() {
         jTextField1.setText("");
         jTextField3.setText("");
         jTextField4.setText("");
         jTable1.clearSelection();
-        
+
     }
- 
+
     private void tabelDiklik() {
         int baris = jTable1.getSelectedRow();
         if (baris >= 0) {
-            jTextField1.setText(jTable1.getValueAt(baris, 1).toString()); 
+            jTextField1.setText(jTable1.getValueAt(baris, 1).toString());
             jTextField3.setText(jTable1.getValueAt(baris, 2).toString());
             jTextField4.setText(jTable1.getValueAt(baris, 3).toString());
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -177,6 +183,7 @@ ResultSet rs;
         jTextField3 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -225,17 +232,25 @@ ResultSet rs;
 
         jLabel3.setText("Id Vendor");
 
+        jButton4.setText("←");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(111, Short.MAX_VALUE)
+                .addContainerGap(82, Short.MAX_VALUE)
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -255,7 +270,8 @@ ResultSet rs;
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -278,19 +294,19 @@ ResultSet rs;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-editData();    // TODO add your handling code here:
+        editData();    // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-hapusData();    // TODO add your handling code here:
+        hapusData();    // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-createData();  // TODO add your handling code here:
+        createData();  // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
- int baris = jTable1.getSelectedRow();
+        int baris = jTable1.getSelectedRow();
         if (baris >= 0) {
             jTextField1.setText(jTable1.getValueAt(baris, 1).toString());//Username
             jTextField3.setText(jTable1.getValueAt(baris, 2).toString());// Password
@@ -298,45 +314,15 @@ createData();  // TODO add your handling code here:
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Product.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Product.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Product.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Product.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Product().setVisible(true);
-            }
-        });
-    }
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        this.app.showDashboard();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

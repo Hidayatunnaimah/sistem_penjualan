@@ -15,9 +15,11 @@ public class SistemPenjualan {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Koneksi.koneksi();
+
         java.awt.EventQueue.invokeLater(() -> {
-            new Login().setVisible(true);
+            new Bootstrap().setVisible(true);
         });
     }
-    
+
 }
