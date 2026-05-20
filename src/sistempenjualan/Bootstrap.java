@@ -21,11 +21,13 @@ public class Bootstrap extends JFrame {
     private final String CARD_USER = "card_user";
     private final String CARD_STOK = "card_stock";
     private final String CARD_MANAGEMENT_STOK = "management_stock";
+    private final String CARD_REPORT_PENJUALAN = "card_report_penjualan";
+    private final String CARD_FORM_PENJUALAN = "card_form_penjualan";
 
     private CardLayout cardLayout;
     private JPanel cards;
-
     private String sessionRole = null;
+    private int sessionUserId = 0;
 
     public Bootstrap() {
         setTitle("Aplikasi Penjualan & Inventory di PT Mitra Tiga Sepakat");
@@ -44,7 +46,9 @@ public class Bootstrap extends JFrame {
         User user = new User(this);
         MonitorStok stok = new MonitorStok(this);
         ManajemenStok manageStock = new ManajemenStok(this);
-        
+        ReportPenjualan reportPenjualan = new ReportPenjualan(this);
+        FormPenjualan formPenjualan = new FormPenjualan(this);
+
         cards.add(login.getContentPane(), CARD_LOGIN);
         cards.add(dashboard.getContentPane(), CARD_DASHBOARD_ADMIN);
         cards.add(vendor.getContentPane(), CARD_VENDOR);
@@ -53,7 +57,12 @@ public class Bootstrap extends JFrame {
         cards.add(user.getContentPane(), CARD_USER);
         cards.add(stok.getContentPane(), CARD_STOK);
         cards.add(manageStock.getContentPane(), CARD_MANAGEMENT_STOK);
-
+        cards.add(reportPenjualan, CARD_REPORT_PENJUALAN);
+        cards.add(formPenjualan,   CARD_FORM_PENJUALAN);
+        
+        cards.revalidate();
+        cards.repaint();
+        
         // Tampilkan pertama kali (login)
         cardLayout.show(cards, CARD_LOGIN);
 
@@ -61,7 +70,7 @@ public class Bootstrap extends JFrame {
         setVisible(true);
     }
 
-    // Set dan Get Session Role
+    // Set dan Get Session 
     public void setSessionRole(String role) {
         this.sessionRole = role;
     }
@@ -69,7 +78,15 @@ public class Bootstrap extends JFrame {
     public String getSessionRole() {
         return this.sessionRole;
     }
-    // End Set dan Get Session Role
+    
+    public void setSessionUserId(int userId) {
+        this.sessionUserId = userId;
+    }
+
+    public int getSessionUserId() {
+        return this.sessionUserId;
+    }
+    // End Set dan Get Session 
 
     public void showCard(String name) {
         cardLayout.show(cards, name);
@@ -80,7 +97,8 @@ public class Bootstrap extends JFrame {
     }
 
     public void showDashboard() {
-        if ("admin".equalsIgnoreCase(sessionRole)){
+        
+        if ("admin".equalsIgnoreCase(sessionRole)) {
             showCard(CARD_DASHBOARD_ADMIN);
         } else {
             showCard(CARD_VENDOR);
@@ -98,16 +116,24 @@ public class Bootstrap extends JFrame {
     public void showProduct() {
         showCard(CARD_PRODUCT);
     }
-    
+
     public void showUser() {
         showCard(CARD_USER);
     }
-    
+
     public void showStok() {
         showCard(CARD_STOK);
     }
 
-    public void showManagementStok(){
+    public void showManagementStok() {
         showCard(CARD_MANAGEMENT_STOK);
+    }
+
+    public void showReportPenjualan() {
+        showCard(CARD_REPORT_PENJUALAN);
+    }
+    
+    public void showFormPenjualan() {
+        showCard(CARD_FORM_PENJUALAN);
     }
 }

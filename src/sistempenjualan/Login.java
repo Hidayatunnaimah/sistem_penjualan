@@ -147,6 +147,7 @@ public class Login extends javax.swing.JFrame {
                 
                 // session
                 this.app.setSessionRole(role);
+                this.app.setSessionUserId(rs.getInt("id"));
                 this.app.showDashboard();
                 
                 this.dispose();
