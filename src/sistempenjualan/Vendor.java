@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package sistempenjualan;
+
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 import java.sql.*;
@@ -22,10 +23,23 @@ public class Vendor extends javax.swing.JFrame {
 
     /**
      * Creates new form Vendor
+     *
      * @param app
      */
     public Vendor(Bootstrap app) {
         this.app = app;
+        init();
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible) {
+            init();
+        }
+    }
+
+    private void init() {
         initComponents();
         Koneksi.koneksi();
         tampilData();
@@ -38,7 +52,7 @@ public class Vendor extends javax.swing.JFrame {
 
             String[] columns = {"ID", "Nama Vendor", "Nama PIC", "Nomor Telepon", "Email", "Alamat"};
             DefaultTableModel model = new DefaultTableModel(columns, 0);
-            
+
             while (rs.next()) {
                 Object[] row = {
                     rs.getInt("id"),
@@ -50,7 +64,7 @@ public class Vendor extends javax.swing.JFrame {
                 };
                 model.addRow(row);
             }
-            
+
             jTable1.setModel(model);
             rs.close();
         } catch (Exception e) {
@@ -427,8 +441,8 @@ public class Vendor extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-       // TODO add your handling code here:
-       tabelDiklik();
+        // TODO add your handling code here:
+        tabelDiklik();
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -448,19 +462,19 @@ public class Vendor extends javax.swing.JFrame {
 
         try {
 
-    JasperPrint jp = JasperFillManager.fillReport(
-            getClass().getResourceAsStream("/sistempenjualan/reports/report_vendor.jasper"),
-            new HashMap<>(),
-            Koneksi.con
-    );
+            JasperPrint jp = JasperFillManager.fillReport(
+                    getClass().getResourceAsStream("/sistempenjualan/reports/report_vendor.jasper"),
+                    new HashMap<>(),
+                    Koneksi.con
+            );
 
-    JasperViewer.viewReport(jp, false);
+            JasperViewer.viewReport(jp, false);
 
-} catch (Exception e) {
+        } catch (Exception e) {
 
-    JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(null, e);
 
-}// TODO add your handling code here:
+        }// TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

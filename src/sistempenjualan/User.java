@@ -22,10 +22,23 @@ public class User extends javax.swing.JFrame {
 
     /**
      * Creates new form User
+     *
      * @param app
      */
     public User(Bootstrap app) {
         this.app = app;
+        init();
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible) {
+            init();
+        }
+    }
+
+    private void init() {
         initComponents();
         Koneksi.koneksi();
         tampilData();
@@ -354,7 +367,7 @@ public class User extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-       clearForm(); // TODO add your handling code here:
+        clearForm(); // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

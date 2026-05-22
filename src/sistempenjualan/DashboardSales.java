@@ -3,9 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package sistempenjualan;
+
 import java.sql.*;
 import javax.swing.JOptionPane;
 import java.text.DecimalFormat;
+
 /**
  *
  * @author Hida
@@ -14,18 +16,32 @@ public class DashboardSales extends javax.swing.JFrame {
 
     private Bootstrap app;
     Connection conn;
+
     /**
      * Creates new form DashboardAdmin
+     *
      * @param app
      */
     public DashboardSales(Bootstrap app) {
         this.app = app;
+        init();
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible) {
+            init();
+        }
+    }
+
+    private void init() {
         initComponents();
         Koneksi.koneksi();
         conn = Koneksi.con;
         loadDashboard();
     }
-    
+
     public void loadDashboard() {
         try {
 
@@ -65,6 +81,7 @@ public class DashboardSales extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

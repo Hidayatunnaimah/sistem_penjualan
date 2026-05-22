@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sistempenjualan;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
@@ -12,20 +12,36 @@ import java.text.SimpleDateFormat;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 import java.util.HashMap;
+
 /**
  *
  * @author Hida
  */
 public class ManajemenStok extends javax.swing.JFrame {
+
     ResultSet rs;
     private int[] vendorIds;
     private int[] produkIds;
     private int selectedMovementId = -1;
     private Bootstrap app;
 
-    /** Creates new form ManajemenStok */
+    /**
+     * Creates new form ManajemenStok
+     */
     public ManajemenStok(Bootstrap app) {
         this.app = app;
+        init();
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible) {
+            init();
+        }
+    }
+
+    private void init() {
         initComponents();
         Koneksi.koneksi();
         loadVendor();
@@ -35,8 +51,7 @@ public class ManajemenStok extends javax.swing.JFrame {
         start.setDateFormatString("yyyy-MM-dd");
         end.setDateFormatString("yyyy-MM-dd");
     }
-    
-    
+
     private void loadVendor() {
         select_vendor.removeAllItems();
         select_vendor.addItem("-- Semua Vendor --");
@@ -53,13 +68,13 @@ public class ManajemenStok extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Gagal load vendor: " + ex.getMessage());
         }
     }
-    
+
     private void loadProduk() {
         select_product.removeAllItems();
         select_product.addItem("-- Pilih Produk --");
         try {
             rs = Koneksi.stm.executeQuery(
-                "SELECT id, code, product_name FROM m_product ORDER BY code");
+                    "SELECT id, code, product_name FROM m_product ORDER BY code");
             java.util.List<Integer> ids = new java.util.ArrayList<>();
             while (rs.next()) {
                 ids.add(rs.getInt("id"));
@@ -71,22 +86,22 @@ public class ManajemenStok extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Gagal load produk: " + ex.getMessage());
         }
     }
-    
+
     private void loadProdukByVendor(int vendorIds) {
         select_product.removeAllItems();
         select_product.addItem("-- Pilih Produk --");
         try {
             PreparedStatement ps = Koneksi.con.prepareStatement(
-                "SELECT id, code, product_name FROM m_product WHERE vendor_id = ? ORDER BY code");
+                    "SELECT id, code, product_name FROM m_product WHERE vendor_id = ? ORDER BY code");
             ps.setInt(1, vendorIds);
-            
+
             rs = ps.executeQuery();
             java.util.List<Integer> ids = new java.util.ArrayList<>();
             while (rs.next()) {
                 ids.add(rs.getInt("id"));
                 select_product.addItem(rs.getString("code") + " | " + rs.getString("product_name"));
             }
-            
+
             produkIds = ids.stream().mapToInt(i -> i).toArray();
             rs.close();
             ps.close();
@@ -103,12 +118,12 @@ public class ManajemenStok extends javax.swing.JFrame {
 
         try {
             StringBuilder sql = new StringBuilder(
-                "SELECT sm.id, DATE(sm.created_at) AS date, TIME(sm.created_at) AS time, " +
-                "mp.code, mp.product_name, mv.vendor_name, sm.movement_type, sm.qty, sm.notes " +
-                "FROM stock_movement sm " +
-                "LEFT JOIN stock s ON s.id = sm.stock_id " +
-                "LEFT JOIN m_product mp ON s.product_id = mp.id " +
-                "LEFT JOIN m_vendor mv ON mv.id = mp.vendor_id"
+                    "SELECT sm.id, DATE(sm.created_at) AS date, TIME(sm.created_at) AS time, "
+                    + "mp.code, mp.product_name, mv.vendor_name, sm.movement_type, sm.qty, sm.notes "
+                    + "FROM stock_movement sm "
+                    + "LEFT JOIN stock s ON s.id = sm.stock_id "
+                    + "LEFT JOIN m_product mp ON s.product_id = mp.id "
+                    + "LEFT JOIN m_vendor mv ON mv.id = mp.vendor_id"
             );
 
             java.util.List<String> params = new java.util.ArrayList<>();
@@ -148,7 +163,7 @@ public class ManajemenStok extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Gagal load data: " + ex.getMessage());
         }
-        
+
         manajemenstok_tabel.getColumnModel().getColumn(0).setMinWidth(0);
         manajemenstok_tabel.getColumnModel().getColumn(0).setMaxWidth(0);
         manajemenstok_tabel.getColumnModel().getColumn(0).setWidth(0);
@@ -160,16 +175,16 @@ public class ManajemenStok extends javax.swing.JFrame {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
             String start_date = sdf.format(start.getDate());
-            String end_date   = sdf.format(end.getDate());
+            String end_date = sdf.format(end.getDate());
             loadTableData(
-                start_date.isEmpty() ? null : start_date,
-                end_date.isEmpty()   ? null : end_date
+                    start_date.isEmpty() ? null : start_date,
+                    end_date.isEmpty() ? null : end_date
             );
-        } catch (Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Peringatan", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
+
     private void dateValidation() throws Exception {
         if (start.getDate() == null) {
             throw new Exception("Start date harus diisi!");
@@ -181,9 +196,12 @@ public class ManajemenStok extends javax.swing.JFrame {
             throw new Exception("Start date tidak boleh lebih dari end date!");
         }
     }
+
     private void loadRowToForm() {
         int row = manajemenstok_tabel.getSelectedRow();
-        if (row < 0) return;
+        if (row < 0) {
+            return;
+        }
 
         DefaultTableModel model = (DefaultTableModel) manajemenstok_tabel.getModel();
 
@@ -191,14 +209,14 @@ public class ManajemenStok extends javax.swing.JFrame {
 
         try {
             PreparedStatement ps = Koneksi.con.prepareStatement(
-                "SELECT sm.id, sm.qty, sm.notes, " +
-                "       mp.id AS product_id, mp.code, mp.product_name, " +
-                "       mv.id AS vendor_id, mv.vendor_name " +
-                "FROM stock_movement sm " +
-                "LEFT JOIN stock s   ON s.id = sm.stock_id " +
-                "LEFT JOIN m_product mp ON mp.id = s.product_id " +
-                "LEFT JOIN m_vendor  mv ON mv.id = mp.vendor_id " +
-                "WHERE sm.id = ?"
+                    "SELECT sm.id, sm.qty, sm.notes, "
+                    + "       mp.id AS product_id, mp.code, mp.product_name, "
+                    + "       mv.id AS vendor_id, mv.vendor_name "
+                    + "FROM stock_movement sm "
+                    + "LEFT JOIN stock s   ON s.id = sm.stock_id "
+                    + "LEFT JOIN m_product mp ON mp.id = s.product_id "
+                    + "LEFT JOIN m_vendor  mv ON mv.id = mp.vendor_id "
+                    + "WHERE sm.id = ?"
             );
             ps.setInt(1, selectedMovementId);
 
@@ -210,10 +228,10 @@ public class ManajemenStok extends javax.swing.JFrame {
                 return;
             }
 
-            int    vendorId   = rsEdit.getInt("vendor_id");
-            int    productId  = rsEdit.getInt("product_id");
-            int    qtyVal     = rsEdit.getInt("qty");
-            String notesVal   = rsEdit.getString("notes");
+            int vendorId = rsEdit.getInt("vendor_id");
+            int productId = rsEdit.getInt("product_id");
+            int qtyVal = rsEdit.getInt("qty");
+            String notesVal = rsEdit.getString("notes");
             rsEdit.close();
             ps.close();
 
@@ -244,6 +262,7 @@ public class ManajemenStok extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Gagal load data edit: " + ex.getMessage());
         }
     }
+
     private void simpanData() {
         int produkIdx = select_product.getSelectedIndex();
         if (produkIdx <= 0) {
@@ -260,7 +279,9 @@ public class ManajemenStok extends javax.swing.JFrame {
         int jumlah;
         try {
             jumlah = Integer.parseInt(jumlahStr);
-            if (jumlah <= 0) throw new NumberFormatException();
+            if (jumlah <= 0) {
+                throw new NumberFormatException();
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Jumlah harus lebih dari 0!");
             return;
@@ -271,7 +292,7 @@ public class ManajemenStok extends javax.swing.JFrame {
 
         try {
             PreparedStatement psStock = Koneksi.con.prepareStatement(
-                "SELECT id FROM stock WHERE product_id = ? LIMIT 1");
+                    "SELECT id FROM stock WHERE product_id = ? LIMIT 1");
             psStock.setInt(1, productId);
             ResultSet rsStock = psStock.executeQuery();
 
@@ -280,14 +301,16 @@ public class ManajemenStok extends javax.swing.JFrame {
                 stockId = rsStock.getInt("id");
             } else {
                 JOptionPane.showMessageDialog(this, "Data stock untuk produk ini tidak ditemukan!");
-                rsStock.close(); psStock.close();
+                rsStock.close();
+                psStock.close();
                 return;
             }
-            rsStock.close(); psStock.close();
+            rsStock.close();
+            psStock.close();
 
             PreparedStatement psInsert = Koneksi.con.prepareStatement(
-                "INSERT INTO stock_movement (stock_id, movement_type, qty, notes, created_at, created_by) " +
-                "VALUES (?, 'IN', ?, ?, NOW(), 1)");
+                    "INSERT INTO stock_movement (stock_id, movement_type, qty, notes, created_at, created_by) "
+                    + "VALUES (?, 'IN', ?, ?, NOW(), 1)");
             psInsert.setInt(1, stockId);
             psInsert.setInt(2, jumlah);
             psInsert.setString(3, notes_value.isEmpty() ? null : notes_value);
@@ -307,7 +330,7 @@ public class ManajemenStok extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Gagal simpan: " + ex.getMessage());
         }
     }
-    
+
     private void updateData() {
         if (selectedMovementId < 0) {
             JOptionPane.showMessageDialog(this, "Tidak ada data yang dipilih untuk diupdate!");
@@ -323,7 +346,9 @@ public class ManajemenStok extends javax.swing.JFrame {
         int jumlah;
         try {
             jumlah = Integer.parseInt(jumlahStr);
-            if (jumlah <= 0) throw new NumberFormatException();
+            if (jumlah <= 0) {
+                throw new NumberFormatException();
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Jumlah harus angka positif!");
             return;
@@ -332,13 +357,15 @@ public class ManajemenStok extends javax.swing.JFrame {
         String notesValue = notes.getText().trim();
 
         int confirm = JOptionPane.showConfirmDialog(this,
-            "Yakin ingin mengupdate data stok ini?", "Konfirmasi Update",
-            JOptionPane.YES_NO_OPTION);
-        if (confirm != JOptionPane.YES_OPTION) return;
+                "Yakin ingin mengupdate data stok ini?", "Konfirmasi Update",
+                JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
 
         try {
             PreparedStatement ps = Koneksi.con.prepareStatement(
-                "UPDATE stock_movement SET qty = ?, notes = ? WHERE id = ?"
+                    "UPDATE stock_movement SET qty = ?, notes = ? WHERE id = ?"
             );
             ps.setInt(1, jumlah);
             ps.setString(2, notesValue.isEmpty() ? null : notesValue);
@@ -354,7 +381,7 @@ public class ManajemenStok extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Gagal update: " + ex.getMessage());
         }
     }
-    
+
     private void resetForm() {
         selectedMovementId = -1;
         select_vendor.setEnabled(true);
@@ -366,10 +393,11 @@ public class ManajemenStok extends javax.swing.JFrame {
         simpan.setText("Simpan");
         batal.setVisible(false);
     }
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -708,7 +736,7 @@ public class ManajemenStok extends javax.swing.JFrame {
 
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
         // TODO add your handling code here:
-       resetForm();
+        resetForm();
     }//GEN-LAST:event_batalActionPerformed
 
     private void filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterActionPerformed
@@ -720,7 +748,7 @@ public class ManajemenStok extends javax.swing.JFrame {
         // TODO add your handling code here:
         int index = select_vendor.getSelectedIndex();
 
-        if(index > 0) {
+        if (index > 0) {
             int vendorId = vendorIds[index - 1];
             loadProdukByVendor(vendorId);
         }
@@ -728,7 +756,7 @@ public class ManajemenStok extends javax.swing.JFrame {
 
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
         // TODO add your handling code here:
-       if (simpan.getText().equals("Update")) {
+        if (simpan.getText().equals("Update")) {
             updateData();
         } else {
             simpanData();
@@ -751,7 +779,7 @@ public class ManajemenStok extends javax.swing.JFrame {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
             String start_date = sdf.format(start.getDate());
-            String end_date   = sdf.format(end.getDate());
+            String end_date = sdf.format(end.getDate());
 
             HashMap<String, Object> parameter = new HashMap<>();
 
@@ -759,9 +787,9 @@ public class ManajemenStok extends javax.swing.JFrame {
             parameter.put("end", end_date);
 
             JasperPrint jp = JasperFillManager.fillReport(
-                getClass().getResourceAsStream("/sistempenjualan/reports/report_stock.jasper"),
-                parameter,
-                Koneksi.con
+                    getClass().getResourceAsStream("/sistempenjualan/reports/report_stock.jasper"),
+                    parameter,
+                    Koneksi.con
             );
 
             JasperViewer.viewReport(jp, false);

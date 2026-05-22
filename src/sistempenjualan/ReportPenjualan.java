@@ -47,6 +47,20 @@ public class ReportPenjualan extends javax.swing.JPanel {
         loadSalesComboBox();
         loadData();
     }
+    
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible) {
+            refreshPanelForDisplay();
+        }
+    }
+    
+    private void refreshPanelForDisplay() {
+        loadSalesComboBox();
+        loadData();
+    }
+
 
     private void loadSalesComboBox() {
         jComboBox1.removeAllItems();

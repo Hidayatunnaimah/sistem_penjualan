@@ -28,6 +28,19 @@ public class Customer extends javax.swing.JFrame {
     public Customer(Bootstrap app) {
         this.app = app;
         initComponents();
+        refreshPanelForDisplay();
+
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible) {
+            refreshPanelForDisplay();
+        }
+    }
+
+    private void refreshPanelForDisplay() {
         Koneksi.koneksi();
         tampilData();
     }

@@ -32,6 +32,7 @@ public class Bootstrap extends JFrame {
     private DashboardSales dashboard_sales;
     private DashboardAdmin dashboard;
     private MonitorStok stok;
+    private ReportPenjualan reportPenjualan;
 
     public Bootstrap() {
         setTitle("Aplikasi Penjualan & Inventory di PT Mitra Tiga Sepakat");
@@ -50,7 +51,7 @@ public class Bootstrap extends JFrame {
         User user = new User(this);
         stok = new MonitorStok(this);
         ManajemenStok manageStock = new ManajemenStok(this);
-        ReportPenjualan reportPenjualan = new ReportPenjualan(this);
+        this.reportPenjualan = new ReportPenjualan(this);
         FormPenjualan formPenjualan = new FormPenjualan(this);
         dashboard_sales = new DashboardSales(this);
 
@@ -65,12 +66,9 @@ public class Bootstrap extends JFrame {
         cards.add(reportPenjualan, CARD_REPORT_PENJUALAN);
         cards.add(formPenjualan,   CARD_FORM_PENJUALAN);
         cards.add(dashboard_sales.getContentPane(), CARD_DASHBOARD_SALES);
-        
-        cards.revalidate();
-        cards.repaint();
-        
+
         // Tampilkan pertama kali (login)
-        cardLayout.show(cards, CARD_LOGIN);
+        showCard(CARD_LOGIN);
 
         add(cards);
         setVisible(true);
@@ -93,9 +91,12 @@ public class Bootstrap extends JFrame {
         return this.sessionUserId;
     }
     // End Set dan Get Session 
-
-    public void showCard(String name) {
+    
+    
+    private void showCard(String name) {
         cardLayout.show(cards, name);
+        cards.revalidate();
+        cards.repaint();
     }
 
     public void showLogin() {
@@ -103,7 +104,6 @@ public class Bootstrap extends JFrame {
     }
 
     public void showDashboard() {
-        
         if ("admin".equalsIgnoreCase(sessionRole)) {
             dashboard.loadDashboard();
             showCard(CARD_DASHBOARD_ADMIN);
@@ -130,7 +130,6 @@ public class Bootstrap extends JFrame {
     }
 
     public void showStok() {
-        stok.refreshData();
         showCard(CARD_STOK);
     }
 

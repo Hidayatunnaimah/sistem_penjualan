@@ -24,10 +24,23 @@ public class Product extends javax.swing.JFrame {
 
     /**
      * Creates new form Product
+     *
      * @param app
      */
     public Product(Bootstrap app) {
         this.app = app;
+        init();
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible) {
+            init();
+        }
+    }
+
+    private void init() {
         initComponents();
         Koneksi.koneksi();
         tampilData();
@@ -53,11 +66,12 @@ public class Product extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Gagal load vendor: " + ex.getMessage());
         }
-    } 
+    }
+
     private void tampilData() {
         try {
-            String sql = "SELECT mp.id, mp.code, mp.product_name, mp.price, mp.vendor_id, mv.vendor_name " +
-                         "FROM m_product mp LEFT JOIN m_vendor mv ON mv.id = mp.vendor_id";
+            String sql = "SELECT mp.id, mp.code, mp.product_name, mp.price, mp.vendor_id, mv.vendor_name "
+                    + "FROM m_product mp LEFT JOIN m_vendor mv ON mv.id = mp.vendor_id";
             rs = Koneksi.stm.executeQuery(sql);
 
             String[] columns = {"ID", "Kode Produk", "Nama Produk", "Harga", "Nama Vendor"};
@@ -72,7 +86,7 @@ public class Product extends javax.swing.JFrame {
                     rs.getString("code"),
                     rs.getString("product_name"),
                     rs.getString("price"),
-                    rs.getString("vendor_name")  // tabel tetap tampil nama vendor
+                    rs.getString("vendor_name") // tabel tetap tampil nama vendor
                 };
                 model.addRow(row);
             }
@@ -168,7 +182,7 @@ public class Product extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Gagal mengupdate data: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
+
         tambah.setVisible(true);
         edit.setVisible(false);
         hapus.setVisible(false);
@@ -201,7 +215,7 @@ public class Product extends javax.swing.JFrame {
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-        
+
         tambah.setVisible(true);
         edit.setVisible(false);
     }
@@ -215,10 +229,9 @@ public class Product extends javax.swing.JFrame {
         tambah.setVisible(true);
         edit.setVisible(false);
         hapus.setVisible(false);
-        
 
     }
-    
+
     private void tabelDiklik() {
         tambah.setVisible(false);
         edit.setVisible(true);
@@ -239,6 +252,7 @@ public class Product extends javax.swing.JFrame {
             }
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

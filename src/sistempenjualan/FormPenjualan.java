@@ -64,6 +64,18 @@ public class FormPenjualan extends javax.swing.JPanel {
      */
     public FormPenjualan(Bootstrap app) {
         this.app = app;
+        init();
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible) {
+            init();
+        }
+    }
+
+    private void init() {
         initComponents();
         setupCustomComponents();
         setupDatabase();
