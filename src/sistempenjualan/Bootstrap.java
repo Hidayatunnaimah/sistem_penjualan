@@ -59,7 +59,7 @@ public class Bootstrap extends JFrame {
         cards.add(dashboard.getContentPane(), CARD_DASHBOARD_ADMIN);
         cards.add(vendor.getContentPane(), CARD_VENDOR);
         cards.add(cust.getContentPane(), CARD_CUSTOMER);
-        cards.add(product.getContentPane(), CARD_PRODUCT);
+        cards.add(product, CARD_PRODUCT);
         cards.add(user.getContentPane(), CARD_USER);
         cards.add(stok.getContentPane(), CARD_STOK);
         cards.add(manageStock.getContentPane(), CARD_MANAGEMENT_STOK);

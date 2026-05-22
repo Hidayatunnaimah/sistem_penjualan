@@ -67,13 +67,13 @@ public class FormPenjualan extends javax.swing.JPanel {
         init();
     }
 
-    @Override
-    public void setVisible(boolean visible) {
-        super.setVisible(visible);
-        if (visible) {
-            init();
-        }
-    }
+//    @Override
+//    public void setVisible(boolean visible) {
+//        super.setVisible(visible);
+//        if (visible) {
+//            init();
+//        }
+//    }
 
     private void init() {
         initComponents();
