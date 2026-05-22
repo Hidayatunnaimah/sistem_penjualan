@@ -30,6 +30,7 @@ public class Bootstrap extends JFrame {
     private String sessionRole = null;
     private int sessionUserId = 0;
     private DashboardSales dashboard_sales;
+    private DashboardAdmin dashboard;
     private MonitorStok stok;
 
     public Bootstrap() {
@@ -42,7 +43,7 @@ public class Bootstrap extends JFrame {
         cards = new JPanel(cardLayout);
 
         Login login = new Login(this);
-        DashboardAdmin dashboard = new DashboardAdmin(this);
+        dashboard = new DashboardAdmin(this);
         Vendor vendor = new Vendor(this);
         Customer cust = new Customer(this);
         Product product = new Product(this);
@@ -104,6 +105,7 @@ public class Bootstrap extends JFrame {
     public void showDashboard() {
         
         if ("admin".equalsIgnoreCase(sessionRole)) {
+            dashboard.loadDashboard();
             showCard(CARD_DASHBOARD_ADMIN);
         } else {
             dashboard_sales.loadDashboard();
