@@ -132,6 +132,8 @@ public class Bootstrap extends JFrame {
     }
 
     public void showStok() {
+        this.stok.loadCardData();
+        this.stok.loadTableData();
         showCard(CARD_STOK);
     }
 
