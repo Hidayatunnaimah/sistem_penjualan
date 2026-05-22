@@ -631,7 +631,7 @@ public class FormPenjualan extends javax.swing.JPanel {
         jTextField2.setText(sdf.format(new Date()));
     }
 
-    private void loadCustomers() {
+    public void loadCustomers() {
         try {
             jComboBox1.removeAllItems();
             jComboBox1.addItem("-- Pilih Pelanggan --");

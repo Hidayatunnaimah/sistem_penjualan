@@ -33,6 +33,7 @@ public class Bootstrap extends JFrame {
     private DashboardAdmin dashboard;
     private MonitorStok stok;
     private ReportPenjualan reportPenjualan;
+    private FormPenjualan formPenjualan;
 
     public Bootstrap() {
         setTitle("Aplikasi Penjualan & Inventory di PT Mitra Tiga Sepakat");
@@ -52,7 +53,7 @@ public class Bootstrap extends JFrame {
         stok = new MonitorStok(this);
         ManajemenStok manageStock = new ManajemenStok(this);
         this.reportPenjualan = new ReportPenjualan(this);
-        FormPenjualan formPenjualan = new FormPenjualan(this);
+        this.formPenjualan = new FormPenjualan(this);
         dashboard_sales = new DashboardSales(this);
 
         cards.add(login.getContentPane(), CARD_LOGIN);
@@ -142,6 +143,7 @@ public class Bootstrap extends JFrame {
     }
     
     public void showFormPenjualan() {
+        this.formPenjualan.loadCustomers();
         showCard(CARD_FORM_PENJUALAN);
     }
     

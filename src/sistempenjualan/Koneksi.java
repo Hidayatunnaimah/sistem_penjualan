@@ -47,7 +47,7 @@ public class Koneksi {
                     + "    phone_number    VARCHAR(20),"
                     + "    customer_name   VARCHAR(100) NOT NULL,"
                     + "    address         TEXT,"
-                    + "    gender          ENUM('L','P')"
+                    + "    gender          VARCHAR(20)"  // UBAH DARI ENUM('L','P') KE VARCHAR(20)
                     + ")"
             );
             stm.executeUpdate(
@@ -140,14 +140,14 @@ public class Koneksi {
                     + "('sari_m',  'pass1234', 'sales')"
             );
 
-            // Customers
+            // Customers - UBAH DARI 'L'/'P' KE 'Laki-laki'/'Perempuan'
             stm.executeUpdate(
                     "INSERT INTO m_customer (phone_number, customer_name, address, gender) VALUES "
-                    + "('081234567890', 'Budi Santoso',  'Jl. Mawar No. 12, Jakarta',   'L'),"
-                    + "('082345678901', 'Rina Kusuma',   'Jl. Melati No. 5, Bandung',   'P'),"
-                    + "('083456789012', 'Doni Pratama',  'Jl. Kenanga No. 8, Surabaya', 'L'),"
-                    + "('084567890123', 'Sari Mulyani',  'Jl. Anggrek No. 3, Bekasi',   'P'),"
-                    + "('085678901234', 'Andi Wijaya',   'Jl. Dahlia No. 17, Depok',    'L')"
+                    + "('081234567890', 'Budi Santoso',  'Jl. Mawar No. 12, Jakarta',   'Laki-laki'),"
+                    + "('082345678901', 'Rina Kusuma',   'Jl. Melati No. 5, Bandung',   'Perempuan'),"
+                    + "('083456789012', 'Doni Pratama',  'Jl. Kenanga No. 8, Surabaya', 'Laki-laki'),"
+                    + "('084567890123', 'Sari Mulyani',  'Jl. Anggrek No. 3, Bekasi',   'Perempuan'),"
+                    + "('085678901234', 'Andi Wijaya',   'Jl. Dahlia No. 17, Depok',    'Laki-laki')"
             );
 
             // Vendors
@@ -202,20 +202,21 @@ public class Koneksi {
 
             // Transaction details
             stm.executeUpdate(
-                    "INSERT INTO trx_detail (trx_id, product_id, qty, sub_price, price) VALUES "
+                    "INSERT INTO trx_detail (trx_id, product_id, qty, subprice, price) VALUES "
                     + "(1, 1, 1, 8500000.00, 8500000.00),"
-                    + "(2, 2, 1,  150000.00, 150000.00),"
-                    + "(3, 3, 1,  450000.00, 450000.00),"
+                    + "(1, 2, 1,  150000.00,  150000.00),"
+                    + "(2, 2, 1,  150000.00,  150000.00),"
+                    + "(3, 3, 2,  450000.00,  900000.00),"
                     + "(4, 4, 1, 2300000.00, 2300000.00),"
-                    + "(5, 5, 2,  700000.00, 1400000.00)"
+                    + "(5, 5, 2,  350000.00,  700000.00)"
             );
 
             // Stock movements - OUT (penjualan)
             stm.executeUpdate(
                     "INSERT INTO stock_movement (stock_id, movement_type, qty, notes, created_by) VALUES "
                     + "(1, 'OUT', 1, 'Penjualan TRX-20250501-001', 2),"
-                    + "(2, 'OUT', 1, 'Penjualan TRX-20250502-001', 2),"
-                    + "(3, 'OUT', 1, 'Penjualan TRX-20250503-001', 3),"
+                    + "(2, 'OUT', 2, 'Penjualan TRX-20250501-001 & TRX-20250502-001', 2),"
+                    + "(3, 'OUT', 2, 'Penjualan TRX-20250503-001', 3),"
                     + "(4, 'OUT', 1, 'Penjualan TRX-20250504-001', 3),"
                     + "(5, 'OUT', 2, 'Penjualan TRX-20250505-001', 4)"
             );
