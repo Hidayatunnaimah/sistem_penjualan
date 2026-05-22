@@ -25,6 +25,10 @@ public class MonitorStok extends javax.swing.JFrame {
         this.app = app;
         initComponents();
         Koneksi.koneksi();
+        refreshData();
+    }
+    
+    public void refreshData() {
         loadCardData();
         loadTableData();
     }
@@ -70,13 +74,6 @@ public class MonitorStok extends javax.swing.JFrame {
 
             String[] columns = {"Kode", "Nama Produk", "Stok", "Vendor"};
             DefaultTableModel model = new DefaultTableModel(columns, 0);
-//            monitorstok_table.getTableHeader().setFont(
-//                new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 30)
-//            );
-
-//            monitorstok_table.getTableHeader().setPreferredSize(
-//                new java.awt.Dimension(0, 40)
-//            );
 //            
             DefaultTableCellRenderer centerRenderer = (DefaultTableCellRenderer)
             monitorstok_table.getTableHeader().getDefaultRenderer();
@@ -308,8 +305,8 @@ public class MonitorStok extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jButton1)
                 .addGap(13, 13, 13)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(inventoripage_button, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inventoripage_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)

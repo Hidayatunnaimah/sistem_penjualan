@@ -38,6 +38,7 @@ public class Product extends javax.swing.JFrame {
 
     private void loadVendor() {
         vendor.removeAllItems();
+        vendor.setMaximumRowCount(100);
         vendor.addItem("-- Pilih Vendor --");
         try {
             rs = Koneksi.stm.executeQuery("SELECT id, vendor_name FROM m_vendor ORDER BY vendor_name");
