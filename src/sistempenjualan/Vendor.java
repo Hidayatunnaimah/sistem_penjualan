@@ -447,7 +447,7 @@ public class Vendor extends javax.swing.JFrame {
         try {
 
     JasperPrint jp = JasperFillManager.fillReport(
-            getClass().getResourceAsStream("/sistempenjualan/report_vendor.jasper"),
+            getClass().getResourceAsStream("/sistempenjualan/reports/report_vendor.jasper"),
             new HashMap<>(),
             Koneksi.con
     );
