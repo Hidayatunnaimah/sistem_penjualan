@@ -52,7 +52,7 @@ public class ManajemenStok extends javax.swing.JFrame {
         end.setDateFormatString("yyyy-MM-dd");
     }
 
-    private void loadVendor() {
+    public void loadVendor() {
         select_vendor.removeAllItems();
         select_vendor.addItem("-- Semua Vendor --");
         try {
@@ -69,7 +69,7 @@ public class ManajemenStok extends javax.swing.JFrame {
         }
     }
 
-    private void loadProduk() {
+    public void loadProduk() {
         select_product.removeAllItems();
         select_product.addItem("-- Pilih Produk --");
         try {
@@ -87,7 +87,7 @@ public class ManajemenStok extends javax.swing.JFrame {
         }
     }
 
-    private void loadProdukByVendor(int vendorIds) {
+    public void loadProdukByVendor(int vendorIds) {
         select_product.removeAllItems();
         select_product.addItem("-- Pilih Produk --");
         try {

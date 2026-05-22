@@ -34,6 +34,7 @@ public class Bootstrap extends JFrame {
     private MonitorStok stok;
     private ReportPenjualan reportPenjualan;
     private FormPenjualan formPenjualan;
+    private ManajemenStok managementStok;
 
     public Bootstrap() {
         setTitle("Aplikasi Penjualan & Inventory di PT Mitra Tiga Sepakat");
@@ -51,7 +52,7 @@ public class Bootstrap extends JFrame {
         Product product = new Product(this);
         User user = new User(this);
         stok = new MonitorStok(this);
-        ManajemenStok manageStock = new ManajemenStok(this);
+        this.managementStok = new ManajemenStok(this);
         this.reportPenjualan = new ReportPenjualan(this);
         this.formPenjualan = new FormPenjualan(this);
         dashboard_sales = new DashboardSales(this);
@@ -63,7 +64,7 @@ public class Bootstrap extends JFrame {
         cards.add(product, CARD_PRODUCT);
         cards.add(user.getContentPane(), CARD_USER);
         cards.add(stok.getContentPane(), CARD_STOK);
-        cards.add(manageStock.getContentPane(), CARD_MANAGEMENT_STOK);
+        cards.add(managementStok.getContentPane(), CARD_MANAGEMENT_STOK);
         cards.add(reportPenjualan, CARD_REPORT_PENJUALAN);
         cards.add(formPenjualan,   CARD_FORM_PENJUALAN);
         cards.add(dashboard_sales.getContentPane(), CARD_DASHBOARD_SALES);
@@ -135,6 +136,8 @@ public class Bootstrap extends JFrame {
     }
 
     public void showManagementStok() {
+        this.managementStok.loadVendor();
+        this.managementStok.loadProduk();
         showCard(CARD_MANAGEMENT_STOK);
     }
 

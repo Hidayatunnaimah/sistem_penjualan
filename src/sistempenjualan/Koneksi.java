@@ -140,7 +140,7 @@ public class Koneksi {
                     + "('sari_m',  'pass1234', 'sales')"
             );
 
-            // Customers - UBAH DARI 'L'/'P' KE 'Laki-laki'/'Perempuan'
+            // Customers 
             stm.executeUpdate(
                     "INSERT INTO m_customer (phone_number, customer_name, address, gender) VALUES "
                     + "('081234567890', 'Budi Santoso',  'Jl. Mawar No. 12, Jakarta',   'Laki-laki'),"

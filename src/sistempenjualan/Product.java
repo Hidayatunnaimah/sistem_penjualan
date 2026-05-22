@@ -6,6 +6,7 @@ package sistempenjualan;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  * @author nurhalizah
  */
 public class Product extends javax.swing.JPanel {
-    
+
     /**
      * Creates new form Product1
      */
@@ -96,42 +97,49 @@ public class Product extends javax.swing.JPanel {
     }
 
     private void createData() {
-
         String namaP = nama.getText().trim();
         String kodeP = kode.getText().trim();
         String hargaP = harga.getText().trim();
         int selectedIndex = vendor.getSelectedIndex();
         int id_vendor = vendorIds[selectedIndex];
 
-        if (namaP.isEmpty() || hargaP.isEmpty() || selectedIndex == 0) {
-
+        if (namaP.isEmpty() || hargaP.isEmpty() || kodeP.isEmpty() || selectedIndex == 0) {
             JOptionPane.showMessageDialog(this,
-                    "Nama product, harga, dan vendor tidak boleh kosong!",
+                    "Kode product, nama product, harga, dan vendor tidak boleh kosong!",
                     "Peringatan",
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         try {
-
+            // INSERT PRODUCT
             String sql = "INSERT INTO m_product (code, product_name, price, vendor_id) VALUES (?, ?, ?, ?)";
-
-            PreparedStatement ps = Koneksi.con.prepareStatement(sql);
-
-            ps.setString(1, namaP);
+            PreparedStatement ps = Koneksi.con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, kodeP);
             ps.setString(2, namaP);
             ps.setString(3, hargaP);
             ps.setInt(4, id_vendor);
-
             ps.executeUpdate();
 
-            JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
+            // AMBIL ID PRODUCT BARU
+            ResultSet rs = ps.getGeneratedKeys();
+            int newProductId = 0;
+            if (rs.next()) {
+                newProductId = rs.getInt(1);
+            }
 
+            String sqlStock = "INSERT INTO stock (product_id, stock, min_stock) VALUES (?, ?, ?)";
+            PreparedStatement ps2 = Koneksi.con.prepareStatement(sqlStock);
+            ps2.setInt(1, newProductId);
+            ps2.setInt(2, 0);      
+            ps2.setInt(3, 5);      
+            ps2.executeUpdate();
+
+            JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
             clearForm();
             tampilData();
 
         } catch (Exception e) {
-
             JOptionPane.showMessageDialog(this,
                     "Gagal menyimpan data: " + e.getMessage(),
                     "Error",
