@@ -14,11 +14,12 @@ import java.sql.ResultSet;
  * @author Asus
  */
 public class Login extends javax.swing.JFrame {
-    
+
     private Bootstrap app;
 
     /**
      * Creates new form Login
+     *
      * @param app
      */
     public Login(Bootstrap app) {
@@ -144,12 +145,14 @@ public class Login extends javax.swing.JFrame {
             if (rs.next()) {
                 String role = rs.getString("role");
                 JOptionPane.showMessageDialog(null, "Login berhasil sebagai " + role);
-                
+
                 // session
                 this.app.setSessionRole(role);
                 this.app.setSessionUserId(rs.getInt("id"));
                 this.app.showDashboard();
-                
+
+                clearField();
+
                 this.dispose();
 
             } else {
@@ -160,6 +163,11 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void clearField() {
+        jTextField1.setText("");
+        jPasswordField1.setText("");
+    }
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
         // TODO add your handling code here:

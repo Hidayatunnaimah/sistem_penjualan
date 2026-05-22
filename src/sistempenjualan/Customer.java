@@ -6,15 +6,22 @@
 package sistempenjualan;
 
 import java.sql.*;
+import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
 /**
  *
  * @author Asus
  */
 public class Customer extends javax.swing.JFrame {
+
     ResultSet rs;
     private Bootstrap app;
+
     /**
      * Creates new form Customer
      */
@@ -24,20 +31,20 @@ public class Customer extends javax.swing.JFrame {
         Koneksi.koneksi();
         tampilData();
     }
-    
+
     private void tampilData() {
         try {
             String sql = "SELECT * FROM m_customer";
             rs = Koneksi.stm.executeQuery(sql);
- 
+
             //DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
             //model.setRowCount(0);
             String[] columns = {"ID", "Nomor Telepon", "Nama Customer", "Alamat", "Gender"};
             DefaultTableModel model = new DefaultTableModel(columns, 0);
             jTable3.getTableHeader().setFont(
-                new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 22)
+                    new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 22)
             );
- 
+
             while (rs.next()) {
                 Object[] row = {
                     rs.getInt("id"),
@@ -48,7 +55,7 @@ public class Customer extends javax.swing.JFrame {
                 };
                 model.addRow(row);
             }
-            
+
             jTable3.setModel(model);
             rs.close();
         } catch (Exception e) {
@@ -56,10 +63,10 @@ public class Customer extends javax.swing.JFrame {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void createData() {
         String nomor = no_tlp.getText().trim();
-        String nama   = cust_name.getText().trim();
+        String nama = cust_name.getText().trim();
         String alamat = address.getText().trim();
         String gender = "";
         if (laki.isSelected()) {
@@ -67,13 +74,13 @@ public class Customer extends javax.swing.JFrame {
         } else if (pr.isSelected()) {
             gender = "Perempuan";
         }
- 
+
         if (nama.isEmpty() || nomor.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nama dan Nomor Telepon tidak boleh kosong!",
                     "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
- 
+
         try {
             String sql = "INSERT INTO m_customer (phone_number, customer_name, address, gender) VALUES ("
                     + "'" + nomor + "', "
@@ -91,7 +98,6 @@ public class Customer extends javax.swing.JFrame {
         }
     }
 
-    
     private void editData() {
         int baris = jTable3.getSelectedRow();
         if (baris < 0) {
@@ -99,9 +105,9 @@ public class Customer extends javax.swing.JFrame {
                     "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
- 
+
         String nomor = no_tlp.getText().trim();
-        String nama   = cust_name.getText().trim();
+        String nama = cust_name.getText().trim();
         String alamat = address.getText().trim();
         String gender = "";
         if (laki.isSelected()) {
@@ -109,15 +115,15 @@ public class Customer extends javax.swing.JFrame {
         } else if (pr.isSelected()) {
             gender = "Perempuan";
         }
- 
+
         if (nama.isEmpty() || alamat.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nama dan Alamat tidak boleh kosong!",
                     "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
- 
+
         int id = (int) jTable3.getValueAt(baris, 0);
- 
+
         try {
             String sql = "UPDATE m_customer SET "
                     + "phone_number='" + nomor
@@ -142,14 +148,14 @@ public class Customer extends javax.swing.JFrame {
                     "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
- 
-        int    id   = (int)    jTable3.getValueAt(baris, 0);
+
+        int id = (int) jTable3.getValueAt(baris, 0);
         String nama = (String) jTable3.getValueAt(baris, 1);
- 
+
         int konfirmasi = JOptionPane.showConfirmDialog(this,
                 "Yakin ingin menghapus data \"" + nama + "\"?",
                 "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
- 
+
         if (konfirmasi == JOptionPane.YES_OPTION) {
             try {
                 String sql = "DELETE FROM m_customer WHERE id=" + id;
@@ -163,7 +169,7 @@ public class Customer extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void clearForm() {
 
         no_tlp.setText("");
@@ -172,7 +178,7 @@ public class Customer extends javax.swing.JFrame {
         buttonGroup1.clearSelection();
         jTable3.clearSelection();
     }
- 
+
     private void tabelDiklik() {
         int baris = jTable3.getSelectedRow();
 
@@ -217,6 +223,7 @@ public class Customer extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -285,7 +292,7 @@ public class Customer extends javax.swing.JFrame {
         });
         getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0, 4, 0));
 
         jButton2.setText("Tambah");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -318,6 +325,14 @@ public class Customer extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
+
+        jButton6.setText("Export");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton6);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, 520, 60));
 
@@ -377,6 +392,23 @@ public class Customer extends javax.swing.JFrame {
         clearForm();
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        try {
+
+            JasperPrint jp = JasperFillManager.fillReport(
+                    getClass().getResourceAsStream("/sistempenjualan/reports/report_customer.jasper"),
+                    null,
+                    Koneksi.con
+            );
+
+            JasperViewer.viewReport(jp, false);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea address;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -386,6 +418,7 @@ public class Customer extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

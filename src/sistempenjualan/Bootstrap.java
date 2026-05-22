@@ -139,4 +139,10 @@ public class Bootstrap extends JFrame {
     public void showFormPenjualan() {
         showCard(CARD_FORM_PENJUALAN);
     }
+    
+    public void logout() {
+        this.sessionRole = null;
+        this.sessionUserId = 0;
+        showLogin();
+    }
 }
