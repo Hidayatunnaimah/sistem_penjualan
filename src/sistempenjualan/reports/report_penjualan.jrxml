@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d69351cf-a433-4d8e-a920-5600ae4449a9">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="175"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -70,17 +70,17 @@ ORDER BY t.created_at DESC]]>
 			</staticText>
 			<staticText>
 				<reportElement uuid="2e0a2684-4782-4584-9dc5-4090ff599aec" style="SubTitle" x="303" y="62" width="196" height="22"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[Coffee SubTitle]]></text>
+				<text><![CDATA[Report Penjualan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0889cbd4-ed6d-4c16-8521-20db9e31a3aa" x="172" y="94" width="383" height="42"/>
-				<textElement textAlignment="Right">
-					<font size="10"/>
+				<reportElement uuid="0889cbd4-ed6d-4c16-8521-20db9e31a3aa" x="198" y="94" width="383" height="42"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
 				</textElement>
-				<text><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor purus gravida arcu aliquam mattis. Donec et nulla libero, ut varius massa. Nulla sed turpis elit. Etiam aliquet mauris a ligula hendrerit in auctor leo lobortis.]]></text>
+				<text><![CDATA[Pergudangan taman tekno, Blok.E3 No.48, Kademangan, Setu, South Tangerang City, Banten 15314]]></text>
 			</staticText>
 		</band>
 	</title>
