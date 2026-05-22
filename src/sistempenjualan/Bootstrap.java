@@ -23,7 +23,8 @@ public class Bootstrap extends JFrame {
     private final String CARD_MANAGEMENT_STOK = "management_stock";
     private final String CARD_REPORT_PENJUALAN = "card_report_penjualan";
     private final String CARD_FORM_PENJUALAN = "card_form_penjualan";
-
+    private final String CARD_DASHBOARD_SALES = "card_dashboard_sales";
+    
     private CardLayout cardLayout;
     private JPanel cards;
     private String sessionRole = null;
@@ -48,6 +49,7 @@ public class Bootstrap extends JFrame {
         ManajemenStok manageStock = new ManajemenStok(this);
         ReportPenjualan reportPenjualan = new ReportPenjualan(this);
         FormPenjualan formPenjualan = new FormPenjualan(this);
+        DashboardSales dashboard_sales = new DashboardSales(this);
 
         cards.add(login.getContentPane(), CARD_LOGIN);
         cards.add(dashboard.getContentPane(), CARD_DASHBOARD_ADMIN);
@@ -59,6 +61,7 @@ public class Bootstrap extends JFrame {
         cards.add(manageStock.getContentPane(), CARD_MANAGEMENT_STOK);
         cards.add(reportPenjualan, CARD_REPORT_PENJUALAN);
         cards.add(formPenjualan,   CARD_FORM_PENJUALAN);
+        cards.add(dashboard_sales.getContentPane(), CARD_DASHBOARD_SALES);
         
         cards.revalidate();
         cards.repaint();
@@ -101,7 +104,7 @@ public class Bootstrap extends JFrame {
         if ("admin".equalsIgnoreCase(sessionRole)) {
             showCard(CARD_DASHBOARD_ADMIN);
         } else {
-            showCard(CARD_VENDOR);
+            showCard(CARD_DASHBOARD_SALES);
         }
     }
 
