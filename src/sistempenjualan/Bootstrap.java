@@ -29,6 +29,8 @@ public class Bootstrap extends JFrame {
     private JPanel cards;
     private String sessionRole = null;
     private int sessionUserId = 0;
+    private DashboardSales dashboard_sales;
+    private MonitorStok stok;
 
     public Bootstrap() {
         setTitle("Aplikasi Penjualan & Inventory di PT Mitra Tiga Sepakat");
@@ -45,11 +47,11 @@ public class Bootstrap extends JFrame {
         Customer cust = new Customer(this);
         Product product = new Product(this);
         User user = new User(this);
-        MonitorStok stok = new MonitorStok(this);
+        stok = new MonitorStok(this);
         ManajemenStok manageStock = new ManajemenStok(this);
         ReportPenjualan reportPenjualan = new ReportPenjualan(this);
         FormPenjualan formPenjualan = new FormPenjualan(this);
-        DashboardSales dashboard_sales = new DashboardSales(this);
+        dashboard_sales = new DashboardSales(this);
 
         cards.add(login.getContentPane(), CARD_LOGIN);
         cards.add(dashboard.getContentPane(), CARD_DASHBOARD_ADMIN);
@@ -104,6 +106,7 @@ public class Bootstrap extends JFrame {
         if ("admin".equalsIgnoreCase(sessionRole)) {
             showCard(CARD_DASHBOARD_ADMIN);
         } else {
+            dashboard_sales.loadDashboard();
             showCard(CARD_DASHBOARD_SALES);
         }
     }
@@ -125,6 +128,7 @@ public class Bootstrap extends JFrame {
     }
 
     public void showStok() {
+        stok.refreshData();
         showCard(CARD_STOK);
     }
 

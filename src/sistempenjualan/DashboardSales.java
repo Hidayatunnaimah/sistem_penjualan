@@ -26,7 +26,7 @@ public class DashboardSales extends javax.swing.JFrame {
         loadDashboard();
     }
     
-    private void loadDashboard() {
+    public void loadDashboard() {
         try {
 
             // TOTAL PRODUK
