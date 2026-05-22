@@ -40,10 +40,7 @@ public class Customer extends javax.swing.JFrame {
             //DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
             //model.setRowCount(0);
             String[] columns = {"ID", "Nomor Telepon", "Nama Customer", "Alamat", "Gender"};
-            DefaultTableModel model = new DefaultTableModel(columns, 0);
-            jTable3.getTableHeader().setFont(
-                    new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 22)
-            );
+            DefaultTableModel model = new DefaultTableModel(columns, 0);;
 
             while (rs.next()) {
                 Object[] row = {
@@ -226,12 +223,12 @@ public class Customer extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         laki = new javax.swing.JRadioButton();
         pr = new javax.swing.JRadioButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         address = new javax.swing.JTextArea();
         no_tlp = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -263,17 +260,17 @@ public class Customer extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Alamat");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, -1, -1));
 
         jLabel2.setText("Nama Customer");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, -1, -1));
 
         cust_name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cust_nameActionPerformed(evt);
             }
         });
-        getContentPane().add(cust_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 336, -1));
+        getContentPane().add(cust_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, 336, -1));
 
         jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -282,7 +279,7 @@ public class Customer extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jTable3);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 550, 660, 240));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 660, 240));
 
         jButton4.setText("←");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -334,31 +331,32 @@ public class Customer extends javax.swing.JFrame {
         });
         jPanel1.add(jButton6);
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, 520, 60));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, 430, 40));
 
         jLabel3.setText("Nomor Telepon");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, -1, -1));
 
         jLabel4.setText("Gender");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, -1, -1));
-
-        jTextField1.setText("+62");
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 60, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, -1, -1));
 
         buttonGroup1.add(laki);
         laki.setText("Laki-laki");
-        getContentPane().add(laki, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 340, -1, -1));
+        getContentPane().add(laki, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, -1, -1));
 
         buttonGroup1.add(pr);
         pr.setText("Perempuan");
-        getContentPane().add(pr, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, -1, -1));
+        getContentPane().add(pr, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, -1, -1));
 
         address.setColumns(20);
         address.setRows(5);
         jScrollPane4.setViewportView(address);
 
-        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, 340, -1));
-        getContentPane().add(no_tlp, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 270, -1));
+        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 340, -1));
+        getContentPane().add(no_tlp, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 340, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel5.setText("DATA CUSTOMER");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -423,6 +421,7 @@ public class Customer extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -431,7 +430,6 @@ public class Customer extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JRadioButton laki;
     private javax.swing.JTextField no_tlp;
     private javax.swing.JRadioButton pr;
