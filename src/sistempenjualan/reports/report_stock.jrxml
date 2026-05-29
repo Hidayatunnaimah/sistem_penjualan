@@ -187,12 +187,33 @@ ORDER BY sm.created_at DESC]]>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="99" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement uuid="5313699b-b14a-47f5-83ef-470508700e0b" x="651" y="1" width="101" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="bcb578dc-fd1e-4fe8-bc50-53043d9dda98" x="609" y="1" width="42" height="20"/>
+				<textElement/>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8343405d-ca18-4cfa-88c2-e9135f2b5583" x="663" y="21" width="55" height="20"/>
+				<textElement/>
+				<text><![CDATA[Direktur,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c1a9879e-52a1-40c8-9c79-edd8011e00fd" x="664" y="78" width="54" height="20"/>
+				<textElement/>
+				<text><![CDATA[John Doe]]></text>
+			</staticText>
+		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="6" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="2" splitType="Stretch"/>
 	</summary>
 </jasperReport>
