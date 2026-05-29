@@ -24,6 +24,7 @@ public class Bootstrap extends JFrame {
     private final String CARD_REPORT_PENJUALAN = "card_report_penjualan";
     private final String CARD_FORM_PENJUALAN = "card_form_penjualan";
     private final String CARD_DASHBOARD_SALES = "card_dashboard_sales";
+    private final String CARD_MENU_REPORT = "card_menu_report";
     
     private CardLayout cardLayout;
     private JPanel cards;
@@ -56,6 +57,7 @@ public class Bootstrap extends JFrame {
         this.reportPenjualan = new ReportPenjualan(this);
         this.formPenjualan = new FormPenjualan(this);
         dashboard_sales = new DashboardSales(this);
+        MenuReport menuReport = new MenuReport(this);
 
         cards.add(login.getContentPane(), CARD_LOGIN);
         cards.add(dashboard.getContentPane(), CARD_DASHBOARD_ADMIN);
@@ -68,6 +70,7 @@ public class Bootstrap extends JFrame {
         cards.add(reportPenjualan, CARD_REPORT_PENJUALAN);
         cards.add(formPenjualan,   CARD_FORM_PENJUALAN);
         cards.add(dashboard_sales.getContentPane(), CARD_DASHBOARD_SALES);
+        cards.add(menuReport, CARD_MENU_REPORT);
 
         // Tampilkan pertama kali (login)
         showCard(CARD_LOGIN);
@@ -150,6 +153,10 @@ public class Bootstrap extends JFrame {
     public void showFormPenjualan() {
         this.formPenjualan.loadCustomers();
         showCard(CARD_FORM_PENJUALAN);
+    }
+    
+    public void showMenuReport() {
+        showCard(CARD_MENU_REPORT);
     }
     
     public void logout() {
