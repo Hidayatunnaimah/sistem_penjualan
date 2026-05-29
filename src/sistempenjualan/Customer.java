@@ -233,7 +233,6 @@ public class Customer extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         laki = new javax.swing.JRadioButton();
@@ -336,14 +335,6 @@ public class Customer extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1);
 
-        jButton6.setText("Export");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton6);
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, 430, 40));
 
         jLabel3.setText("Nomor Telepon");
@@ -403,23 +394,6 @@ public class Customer extends javax.swing.JFrame {
         clearForm();
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        try {
-
-            JasperPrint jp = JasperFillManager.fillReport(
-                    getClass().getResourceAsStream("/sistempenjualan/reports/report_customer.jasper"),
-                    null,
-                    Koneksi.con
-            );
-
-            JasperViewer.viewReport(jp, false);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-
-        }
-    }//GEN-LAST:event_jButton6ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea address;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -429,7 +403,6 @@ public class Customer extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

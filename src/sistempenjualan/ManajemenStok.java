@@ -413,7 +413,6 @@ public class ManajemenStok extends javax.swing.JFrame {
         end = new com.toedter.calendar.JDateChooser();
         jPanel5 = new javax.swing.JPanel();
         filter = new javax.swing.JButton();
-        export = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         manajemenstok_tabel = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
@@ -457,32 +456,21 @@ public class ManajemenStok extends javax.swing.JFrame {
             }
         });
 
-        export.setText("Export");
-        export.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exportActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(export, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(filter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(filter, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addComponent(filter)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(export)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -772,37 +760,9 @@ public class ManajemenStok extends javax.swing.JFrame {
         app.showStok();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void exportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportActionPerformed
-        // TODO add your handling code here:
-        try {
-            this.dateValidation();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-            String start_date = sdf.format(start.getDate());
-            String end_date = sdf.format(end.getDate());
-
-            HashMap<String, Object> parameter = new HashMap<>();
-
-            parameter.put("start", start_date);
-            parameter.put("end", end_date);
-
-            JasperPrint jp = JasperFillManager.fillReport(
-                    getClass().getResourceAsStream("/sistempenjualan/reports/report_stock.jasper"),
-                    parameter,
-                    Koneksi.con
-            );
-
-            JasperViewer.viewReport(jp, false);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Peringatan", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_exportActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton batal;
     private com.toedter.calendar.JDateChooser end;
-    private javax.swing.JButton export;
     private javax.swing.JButton filter;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
