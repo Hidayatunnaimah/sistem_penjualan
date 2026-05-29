@@ -5,6 +5,7 @@
 package sistempenjualan;
 
 import java.awt.*;
+import java.io.File;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import javax.swing.*;
@@ -12,7 +13,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -74,7 +83,6 @@ public class FormPenjualan extends javax.swing.JPanel {
 //            init();
 //        }
 //    }
-
     private void init() {
         initComponents();
         setupCustomComponents();
@@ -1099,7 +1107,27 @@ public class FormPenjualan extends javax.swing.JPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         JButton btnCetak = new JButton("Cetak Struk");
         btnCetak.setPreferredSize(new Dimension(120, 35));
-        btnCetak.addActionListener(e -> JOptionPane.showMessageDialog(dialog, "Fitur cetak akan segera hadir!"));
+        btnCetak.addActionListener(evt -> {
+            dialog.dispose();
+
+            Locale locale = new Locale("id", "ID");
+            Locale.setDefault(locale);
+            try {
+                Connection koneksi = Koneksi.getConnection();
+                File file = new File("src/sistempenjualan/reports/struk_penjualan.jrxml");
+                JasperDesign jasperDesign = JRXmlLoader.load(file);
+                JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+
+                Map<String, Object> param = new HashMap<>();
+                param.put("trx_number", noTransaksi);
+
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, param, koneksi);
+                JasperViewer.viewReport(jasperPrint, false);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(dialog, "Gagal cetak: " + ex.getMessage());
+            }
+        });
 
         JButton btnOk = new JButton("OK");
         btnOk.setPreferredSize(new Dimension(120, 35));
